@@ -2,13 +2,16 @@ version: "3.7"
 services:
   carfleet_api:
     build: .
-    restart: always
+    restart: "no"
     ports:
-      - 8080:8080
+      - "8081:8081"
     links:
-      - mongo_db:app_db
+      - mongo_db
+    depends_on:
+      - mongo_db
+
   mongo_db:
     image: "mongo:4.4.3"
-    restart: always
+    restart: "no"
     ports:
-      - 27017:27017
+      - "27018:27017"
