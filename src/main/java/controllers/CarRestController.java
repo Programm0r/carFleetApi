@@ -13,8 +13,7 @@ import utils.ObjectMapperUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 @RequestMapping("/car")
@@ -49,7 +48,7 @@ public class CarRestController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/getCar/{id}")
+    @RequestMapping(method = GET, value = "/getCars/{id}", produces = "application/json;charset=UTF-8")
     public ResponseEntity<Object> getCar(@PathVariable String id) {
         ObjectMapper mapper = new ObjectMapper();
         Car car = carService.getCarById(id);
@@ -62,7 +61,7 @@ public class CarRestController {
         return new ResponseEntity<>("Bad Request: No car found by that id or an error occurred. Please try another carId.",HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/getCar/{name}")
+    @RequestMapping(method = GET, value = "/getCars/{name}", produces = "application/json;charset=UTF-8")
     public ResponseEntity<Object> getCarByName(@PathVariable String name) {
 
         ObjectMapper mapper = new ObjectMapper();
@@ -76,14 +75,14 @@ public class CarRestController {
         return new ResponseEntity<>("Bad Request: No car found by that name or an error occurred. Please try another car model name.",HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping("/updateCar/{id}")
+    @RequestMapping(method = PUT, value = "/updateCar/{id}", produces = "application/json;charset=UTF-8")
     public ResponseEntity<String> updateCar(@RequestBody CarDTO carDTO, @PathVariable String id) {
         Car car = new Car();
         carService.updateCar(id, ObjectMapperUtils.mapToCar(carDTO,car));
         return new ResponseEntity<>("Car updated successfully!", HttpStatus.OK);
      }
 
-    @DeleteMapping("/deleteCar/{id}")
+    @RequestMapping(method = DELETE, value = "/deleteCar/{id}", produces = "application/json;charset=UTF-8")
     public ResponseEntity<String> deleteCar(@PathVariable String id) {
         carService.deleteCarById(id);
         return new ResponseEntity<>("Car deleted successfully!", HttpStatus.OK);
