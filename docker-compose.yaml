@@ -10,6 +10,7 @@ services:
     depends_on:
       - mongo_db
 
+
   mongo_db:
     image: "mongo:4.4.3"
     restart: "no"
